@@ -22,8 +22,19 @@
 
     <TextView
         android:id="@+id/txtDescription"
-        android:text="Description..."
+        android:text="None..."
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         android:layout_above="@id/btnProcess"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/txtDescription2"
+        android:text="None..."
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </RelativeLayout>

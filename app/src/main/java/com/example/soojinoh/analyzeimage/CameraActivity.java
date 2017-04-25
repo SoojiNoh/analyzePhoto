@@ -33,7 +33,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -101,11 +101,12 @@ public class CameraActivity extends AppCompatActivity {
 
     public void startCamera() {
 
+
         if ( preview == null ) {
             preview = new Preview(this, (SurfaceView) findViewById(R.id.surfaceView));
             preview.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                     LayoutParams.MATCH_PARENT));
-            ((FrameLayout) findViewById(R.id.layout)).addView(preview);
+            ((RelativeLayout) findViewById(R.id.layout)).addView(preview);
             preview.setKeepScreenOn(true);
 
             /* 프리뷰 화면 눌렀을 때  사진을 찍음
@@ -134,6 +135,7 @@ public class CameraActivity extends AppCompatActivity {
                         camera));
                 // get Camera parameters
                 Camera.Parameters params = camera.getParameters();
+
                 // picture image orientation
                 params.setRotation(setCameraDisplayOrientation(this, CAMERA_FACING, camera));
                 camera.startPreview();
@@ -155,6 +157,7 @@ public class CameraActivity extends AppCompatActivity {
         ctx = this;
         mActivity = this;
 
+
         //상태바 없애기
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -164,6 +167,7 @@ public class CameraActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_camera);
 
+
         Button button = (Button)findViewById(R.id.btnCapture);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +175,8 @@ public class CameraActivity extends AppCompatActivity {
                 camera.takePicture(shutterCallback, rawCallback, jpegCallback);
             }
         });
+
+
 
 
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
@@ -230,7 +236,7 @@ public class CameraActivity extends AppCompatActivity {
             camera = null;
         }
 
-        ((FrameLayout) findViewById(R.id.layout)).removeView(preview);
+        ((RelativeLayout) findViewById(R.id.layout)).removeView(preview);
         preview = null;
 
     }
