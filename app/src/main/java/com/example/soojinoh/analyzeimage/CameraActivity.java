@@ -326,7 +326,7 @@ public class CameraActivity extends AppCompatActivity {
 
                 mImageCaptureUri = Uri.fromFile(outFile);
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RecognitionActivity.class);
                 intent.putExtra("imageUri", mImageCaptureUri);
                 startActivity(intent);
 
