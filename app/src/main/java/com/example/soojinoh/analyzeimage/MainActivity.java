@@ -13,6 +13,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        startActivity(new Intent(this, SplashActivity.class));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
@@ -34,6 +35,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
     }
 
     private void shape_btn_event(){

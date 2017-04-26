@@ -11,15 +11,17 @@
     android:id="@+id/textView"
     android:maxLines="100"
     android:scrollbars="vertical"
-    android:layout_above="@+id/button"/>
+    android:textSize="30sp"
+    android:layout_centerVertical="true"
+    />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HTML 가져오기"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="HTML 가져오기"-->
+        <!--android:id="@+id/button"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
 
 </RelativeLayout>

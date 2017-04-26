@@ -15,13 +15,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.example.soojinoh.analyzeimage.R.id.textView;
 
 
 public class SearchActivity extends AppCompatActivity {
 
-    private String htmlPageUrl ;
+    private String htmlPageUrl, htmlPageUrl2;
     private TextView textviewHtmlDocument;
     private String htmlContentInStringFormat;
     String barcodeUri;
@@ -42,6 +44,7 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         barcodeUri = intent.getExtras().getString("barcodeUri");
         htmlPageUrl = "http://www.dllg.co.kr/product/product_view.asp?pcode=" + barcodeUri;
+        htmlPageUrl2 = "http://www.koreannet.or.kr/home/hpisSrchGtin.gs1?gtin=" + barcodeUri;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
@@ -68,7 +71,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private class JsoupAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        Elements name, price;
+        Elements name, price, content, detail_info;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -79,10 +82,53 @@ public class SearchActivity extends AppCompatActivity {
             try {
                 Log.i("logcat", htmlPageUrl);
                 Document doc = Jsoup.connect(htmlPageUrl).get();
-                name = doc.select("font[color=#0080c0]");
+                detail_info = doc.select("font[color=#0080c0]");
                 price = doc.select("tr[bgcolor=#F9F9F9");
 
-                    htmlContentInStringFormat += (name.text().trim()) + (price.text().trim()) + "\n";
+                Document doc2 = Jsoup.connect(htmlPageUrl2).get();
+                //*[@id="contents"]/div[3]/dl/div/div[1]
+                name = doc2.select("div[class=productTit]");
+                content = doc2.select("dd[class=description]");
+
+                Log.i("logcat", "price :"+price.text());
+                Log.i("logcat", "name :"+name.text());
+                Log.i("logcat", "content :"+content.text());
+
+
+                //adapt search_result with string pattern
+                String price_string, name_string;
+                Matcher matcher;
+                Pattern r;
+                Log.i("logcat", htmlPageUrl);
+
+                String pattern_price = "(.*)(\\s)(.*)(\\s)(\\d+)(\\s)(.*)";
+                String pattern_name = "(\\d+)(\\s*)(.*)";
+                // Create a Pattern object
+                r = Pattern.compile(pattern_price);
+                // Now create matcher object.
+                matcher = r.matcher(price.text());
+                if (matcher.find( )) {
+                    price_string = matcher.group(7);
+                } else {
+                    price_string = "none";
+                }
+                r = Pattern.compile(pattern_name);
+                matcher = r.matcher(name.text());
+                if (matcher.find( )) {
+                    name_string = matcher.group(3);
+                } else {
+                    name_string = "none";
+                }
+                htmlContentInStringFormat = "";
+                Log.i("logcat","zz"+detail_info.text().trim()+"zz");
+                if (name_string == "none"){
+                    htmlContentInStringFormat ="본 상품의 정보를 찾을 수 없습니다. 죄송합니다.";
+                } else {
+                    htmlContentInStringFormat += "본 상품의 이름은 " + (name_string.trim()) + "입니다.";
+                        if(!detail_info.text().trim().equals("●")){
+                            htmlContentInStringFormat+="더 자세하게 말씀드리자면 " + (price_string.trim()) + "입니다. 간략하게 말씀드리자면 " + (content.text().trim()) + "입니다.";
+                        }
+                }
 
 //                for (Element link : links) {
 //                    htmlContentInStringFormat += (link.attr("abs:href")

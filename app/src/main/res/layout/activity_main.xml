@@ -8,17 +8,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:text="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/shapebutton" />
+        android:id="@+id/shapebutton"
+        android:background="@drawable/detectbutton"/>
 
     <Button
-        android:text="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/barcodebutton" />
+        android:id="@+id/barcodebutton"
+        android:background="@drawable/searchbutton"/>
 </LinearLayout>
 </RelativeLayout>
